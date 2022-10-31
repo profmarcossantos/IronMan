@@ -21,11 +21,21 @@ fundo = pygame.image.load("assets/campo.jpg")
 bola = pygame.image.load("assets/bola.png")
 tamanhoXBola = 50
 tamanhoYBola = 50
-posicaoBolaX = 225
-posicaoBolaY = 305
+posicaoBolaX = 202
+posicaoBolaY = 283
 movimentoBolaX = 0
 movimentoBolaY = 0
 velocidade = 10
+
+placarPlayer1 = 0
+placarPlayer2 = 0
+
+def escreverTexto (texto):
+    fonte  = pygame.font.Font("freesansbold.ttf",15)
+    textoDisplay = fonte.render(texto,True,branco)
+    display.blit(textoDisplay, (5,5))
+
+
 while jogando:
     # Mapendo os eventos do Game
     for evento in pygame.event.get():
@@ -57,9 +67,18 @@ while jogando:
     #pygame.draw.circle(display, cor ,posicao, 10)
     display.blit(bola , (posicaoBolaX,posicaoBolaY) )
 
+    if posicaoBolaY < 8 and posicaoBolaX> 173 and posicaoBolaX < 279:
+        placarPlayer1 += 1
+        posicaoBolaX = 202
+        posicaoBolaY = 283
+
+    if posicaoBolaY > 552 and posicaoBolaX> 173 and posicaoBolaX < 279:
+        placarPlayer2 += 1
+        posicaoBolaX = 202
+        posicaoBolaY = 283
 
 
-
+    escreverTexto("Placar "+str(placarPlayer1)+" x "+str(placarPlayer2))
     pygame.display.update()
     fps.tick(60)
 
