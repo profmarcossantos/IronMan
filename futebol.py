@@ -1,6 +1,6 @@
 import os
-from numpy import disp
 import pygame
+import time
 pygame.init()
 os.system("cls")
 print("Começando o Jogo de Futebol!")
@@ -19,6 +19,8 @@ jogando = True
 
 fundo = pygame.image.load("assets/campo.jpg")
 bola = pygame.image.load("assets/bola.png")
+bola = pygame.transform.scale(bola, (25, 25)) #redimensionar uma imagem
+
 tamanhoXBola = 50
 tamanhoYBola = 50
 posicaoBolaX = 202
@@ -29,11 +31,29 @@ velocidade = 10
 
 placarPlayer1 = 0
 placarPlayer2 = 0
+narraGol = pygame.mixer.Sound("assets/NarraGol.wav")
 
 def escreverTexto (texto):
     fonte  = pygame.font.Font("freesansbold.ttf",15)
     textoDisplay = fonte.render(texto,True,branco)
     display.blit(textoDisplay, (5,5))
+
+def gol ():
+    pygame.mixer.music.stop()
+    pygame.mixer.Sound.play(narraGol)
+    fonte  = pygame.font.Font("freesansbold.ttf",45)
+    textoDisplay = fonte.render("GOOOLLL",True,branco)
+    display.blit(textoDisplay, (100,283))
+    pygame.display.update()
+    time.sleep(3)
+    pygame.mixer.music.load("assets/torcida.mp3")
+    pygame.mixer.music.play(-1) # -1 é looping infinito
+    pygame.mixer.music.set_volume(1) # 1 é 100%
+
+pygame.mixer.music.load("assets/torcida.mp3")
+pygame.mixer.music.play(-1) # -1 é looping infinito
+pygame.mixer.music.set_volume(1) # 1 é 100%
+
 
 
 while jogando:
@@ -68,11 +88,13 @@ while jogando:
     display.blit(bola , (posicaoBolaX,posicaoBolaY) )
 
     if posicaoBolaY < 8 and posicaoBolaX> 173 and posicaoBolaX < 279:
+        gol()
         placarPlayer1 += 1
         posicaoBolaX = 202
         posicaoBolaY = 283
 
     if posicaoBolaY > 552 and posicaoBolaX> 173 and posicaoBolaX < 279:
+        gol()
         placarPlayer2 += 1
         posicaoBolaX = 202
         posicaoBolaY = 283
